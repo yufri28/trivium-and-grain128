@@ -1,6 +1,7 @@
 from collections import defaultdict
 import matplotlib.pyplot as plt
 from collections import Counter
+import numpy as np
 
 
 class PlotHistogram:
@@ -13,15 +14,15 @@ class PlotHistogram:
         #     histogram[key] /= total
         return histogram
 
-    def plot_histogram(self, histogram, title):
-        keys = histogram.keys()
-        values = histogram.values()
-        plt.figure(figsize=(30, 10))
-        plt.bar(keys, values)
-        plt.xlabel("Value")
-        plt.ylabel("Frequency")
-        plt.title(title)
-        plt.show()
+    # def plot_histogram(self, histogram, title):
+    #     keys = histogram.keys()
+    #     values = histogram.values()
+    #     plt.figure(figsize=(30, 10))
+    #     plt.bar(keys, values)
+    #     plt.xlabel("Value")
+    #     plt.ylabel("Frequency")
+    #     plt.title(title)
+    #     plt.show()
 
     def histogram_plain_chiper(self, plaintext_histogram, ciphertext_histogram):
         # Plot histograms
@@ -61,7 +62,7 @@ class PlotHistogram:
     def histogram_lines_graph(self, data1, data2, title):
         keys = set(data1.keys()).union(set(data2.keys()))
         values = range(len(keys))
-
+        plt.figure(figsize=(40, 20))
         # print(values)
         plt.plot(values, [data1.get(key, 0)
                  for key in keys], 'b-', label='Plaintext')
@@ -71,26 +72,43 @@ class PlotHistogram:
         plt.title(title)
         plt.xlabel("Character")
         plt.ylabel("Frequency")
-        plt.xticks(values, keys)
+        # plt.xticks(values, keys)
         plt.legend()
 
     def plot_ascii_frequency(self, string, title):
         ascii_values = [ord(char) for char in string]
         ascii_counts = Counter(ascii_values)
 
-        keys = list(ascii_counts.keys())
-        values = list(ascii_counts.values())
+        print(string)
+        y_values = np.arange(256)
+        frequencies = [ascii_counts[val] for val in y_values]
 
-        sorted_keys = sorted(keys)
-        labels = [str(key) for key in sorted_keys]
-
-        plt.figure(figsize=(40, 10))
-        plt.bar(range(len(keys)), values)
-        plt.xlabel("Kode ASCII")
-        plt.ylabel("Frekuensi")
+        sorted_indices = np.argsort(y_values)
+        sorted_frequencies = [frequencies[i] for i in sorted_indices]
+        plt.figure(figsize=(40, 20))
+        plt.bar(y_values, sorted_frequencies)
+        plt.xlabel('Kode ASCII')
+        plt.ylabel('Frekuensi')
         plt.title(title)
-        plt.xticks(range(len(keys)), labels, rotation='vertical')
         plt.show()
+
+    # def plot_ascii_frequency(self, string, title):
+    #     ascii_values = [ord(char) for char in string]
+    #     ascii_counts = Counter(ascii_values)
+
+    #     keys = list(ascii_counts.keys())
+    #     values = list(ascii_counts.values())
+
+    #     sorted_keys = sorted(keys)
+    #     labels = [str(key) for key in sorted_keys]
+
+    #     plt.figure(figsize=(40, 10))
+    #     plt.bar(range(len(keys)), values)
+    #     plt.xlabel("Kode ASCII")
+    #     plt.ylabel("Frekuensi")
+    #     plt.title(title)
+    #     plt.xticks(range(len(keys)), labels, rotation='vertical')
+    #     plt.show()
 
     # def plot_ascii_frequency(self, string, title):
     #     ascii_values = [ord(char) for char in string]

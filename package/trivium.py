@@ -8,6 +8,10 @@ def bin_to_ascii(binary_string):
     return ascii_character
 
 
+def bin_to_asciii(binary_string):
+    return ''.join([chr(int(i, 2)) for i in binary_string])
+
+
 def calculate_correlation(text1, text2):
     # Normalize the length of texts
     length = min(len(text1), len(text2))
