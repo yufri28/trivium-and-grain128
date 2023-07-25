@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import package
+import time
 
 
 def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherteks, path_cipher_ascii):
@@ -7,6 +8,7 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
     key_bits = toBitList.str_to_bit_list(key_str)
     iv_bits = toBitList.str_to_bit_list(iv_str)
     trivium = package.Trivium(key_bits, iv_bits)
+    timer = Timer()
 
     with open(path_plainteks, 'r') as file:
         plaintext = file.read()
@@ -17,6 +19,13 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
 
     list_ciphertext = []
     list_ciphertext_ascii = []
+    timer.start()
+    for i, block in enumerate(plaintext_blocks):
+        ciphertext = trivium.encrypt(block)
+    timer.stop()
+
+    print(f"Durasi waktu eksekusi {title}:" +
+          " {:.9f} detik".format(timer.get_duration()))
 
     for i, block in enumerate(plaintext_blocks):
         ciphertext = trivium.encrypt(block)
@@ -25,7 +34,6 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
 
         list_ciphertext.append(ciphertext)
         list_ciphertext_ascii.append(ciphertext_ascii)
-
     # merged_ciphertext_ascii = ''.join(list_ciphertext_ascii)
 
     ascii_ = []
@@ -58,3 +66,19 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
     plt.show()
 
 
+class Timer:
+    def __init__(self):
+        self.start_time = None
+        self.end_time = None
+
+    def start(self):
+        self.start_time = time.time()
+
+    def stop(self):
+        self.end_time = time.time()
+
+    def get_duration(self):
+        if self.start_time is not None and self.end_time is not None:
+            return self.end_time - self.start_time
+        else:
+            return None

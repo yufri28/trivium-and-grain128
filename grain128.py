@@ -1,5 +1,6 @@
 import package
 import matplotlib.pyplot as plt
+import time
 
 
 def visualize_text_grain128(key_str, title, path_plainteks, path_cipherteks, path_cipher_ascii, path_cipher_hex):
@@ -21,6 +22,14 @@ def visualize_text_grain128(key_str, title, path_plainteks, path_cipherteks, pat
     list_ciphertext_hex = []
     list_ciphertext_ascii = []
 
+    # Hitung waktu eksekusi
+    timer = Timer()
+    timer.start()
+    for i, block in enumerate(plaintext_blocks):
+        ciphertext = grain128.encrypt(block, key)
+    timer.stop()
+    print(f"Durasi waktu eksekusi {title}:" +
+          " {:.9f} detik".format(timer.get_duration()))
     # Cetak blok-blok hasil pembagian
     for i, block in enumerate(plaintext_blocks):
         ciphertext = grain128.encrypt(block, key)
@@ -89,3 +98,21 @@ def visualize_text_grain128(key_str, title, path_plainteks, path_cipherteks, pat
     # Menampilkan grafik
 
     plt.show()
+
+
+class Timer:
+    def __init__(self):
+        self.start_time = None
+        self.end_time = None
+
+    def start(self):
+        self.start_time = time.time()
+
+    def stop(self):
+        self.end_time = time.time()
+
+    def get_duration(self):
+        if self.start_time is not None and self.end_time is not None:
+            return self.end_time - self.start_time
+        else:
+            return None
