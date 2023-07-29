@@ -4,6 +4,7 @@ import time
 
 
 def visualize_text_lcg(key, title, path_plainteks, path_cipher_ascii):
+
     lcg = package.LCG(key)
     timer = Timer()
 
@@ -15,7 +16,6 @@ def visualize_text_lcg(key, title, path_plainteks, path_cipher_ascii):
     timer.stop()
     decrypt = lcg.decrypt(cipher)
     print(f"Dekripsi : {decrypt}")
-
     print(f"Durasi waktu eksekusi {title}:" +
           " {:.9f} detik".format(timer.get_duration()))
 
@@ -46,6 +46,8 @@ def visualize_text_lcg(key, title, path_plainteks, path_cipher_ascii):
     plots.histogram_lines_graph(
         plaintext_histogram, ciphertext_histogram, f"{title} vs Ciphertext Histogram")
     plt.show()
+
+    return timer.get_duration(), abs(correlation), abs(diff_squared)
 
 
 class Timer:

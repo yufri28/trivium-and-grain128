@@ -99,6 +99,8 @@ def visualize_text_grain128(key_str, title, path_plainteks, path_cipherteks, pat
 
     plt.show()
 
+    return timer.get_duration(), abs(correlation), abs(diff_squared)
+
 
 class Timer:
     def __init__(self):

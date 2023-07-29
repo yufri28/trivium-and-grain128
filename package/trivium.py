@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import time
 
 
 def bin_to_ascii(binary_string):

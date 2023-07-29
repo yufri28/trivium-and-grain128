@@ -65,6 +65,8 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
         plaintext_histogram, ciphertext_histogram, f"{title} vs Ciphertext Histogram")
     plt.show()
 
+    return timer.get_duration(), abs(correlation), abs(diff_squared)
+
 
 class Timer:
     def __init__(self):
