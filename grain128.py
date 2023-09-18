@@ -5,7 +5,7 @@ import time
 
 def visualize_text_grain128(key_str, title, path_plainteks, path_cipherteks, path_cipher_ascii, path_cipher_hex):
 
-    with open(path_plainteks, 'r') as file:
+    with open(path_plainteks, 'r', encoding='latin-1') as file:
         plaintext = file.read()
 
     key_bits = ''.join(format(ord(c), '08b') for c in key_str)
@@ -56,16 +56,16 @@ def visualize_text_grain128(key_str, title, path_plainteks, path_cipherteks, pat
     # merged_ciphertext_ascii = ''.join(list_ciphertext_ascii)
     # Menyimpan ke file
     ascii_ = []
-    with open(path_cipherteks, 'w') as file:
+    with open(path_cipherteks, 'w', encoding='latin-1') as file:
         for ciphertexts in list_ciphertext:
             for i in range(0, len(ciphertexts), 8):
                 file.write(ciphertexts[i:i+8] + " ")
                 ascii_.append(ciphertexts[i:i+8] + "")
     asciiStr = package.bin_to_asciii(ascii_)
-    with open(path_cipher_hex, 'w') as file:
+    with open(path_cipher_hex, 'w', encoding='latin-1') as file:
         file.write(merged_ciphertext_hex)
 
-    with open(path_cipher_ascii, 'w', encoding='utf8') as file:
+    with open(path_cipher_ascii, 'w', encoding='latin-1') as file:
         file.write(asciiStr)
 
     # with open('ciphertext_grain128/decrypted_grain1281.txt', 'w', encoding='utf8') as file:

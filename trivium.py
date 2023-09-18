@@ -10,7 +10,7 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
     trivium = package.Trivium(key_bits, iv_bits)
     timer = Timer()
 
-    with open(path_plainteks, 'r') as file:
+    with open(path_plainteks, 'r', encoding='utf-8') as file:
         plaintext = file.read()
 
     block_size = 80
@@ -37,14 +37,14 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
     # merged_ciphertext_ascii = ''.join(list_ciphertext_ascii)
 
     ascii_ = []
-    with open(path_cipherteks, 'w') as file:
+    with open(path_cipherteks, 'w', encoding='utf-8') as file:
         for ciphertexts in list_ciphertext:
             for i in range(0, len(ciphertexts), 8):
                 file.write(ciphertexts[i:i+8] + " ")
                 ascii_.append(ciphertexts[i:i+8] + "")
 
     asciiStr = package.bin_to_asciii(ascii_)
-
+    print(f"Ascii {len(asciiStr)} dan {len(plaintext)}")
     correlation = package.calculate_correlation(
         plaintext, asciiStr)
     print(f"Korelasi antara {title} dan Ciphertext:", abs(correlation))
@@ -53,7 +53,7 @@ def visualize_text_trivium(key_str, iv_str, title, path_plainteks, path_cipherte
         plaintext, asciiStr)
     print("PSNR:", abs(diff_squared))
 
-    with open(path_cipher_ascii, 'w', encoding='utf8') as file:
+    with open(path_cipher_ascii, 'w',  encoding='utf-8') as file:
         file.write(asciiStr)
 
     plots = package.PlotHistogram()
